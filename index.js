@@ -65,7 +65,10 @@ app.listen(port, () => console.log(`Listening on port ${port}...`));
 app.put('/api/courses/', (req, res) => {
     //verify if course exists
     const course = courses.find(c => c.id === parseInt(req.params.id));
-    if (!course) res.status(404).send('The course with the gived ID does not exist");
+    if (!course) {
+        res.status(404).send('The course with the gived ID does not exist');
+        return;
+    }
 
 //Validate
 const schema = {
@@ -96,6 +99,16 @@ function validateCourse(course) {
 
 app.delete('/api/courses/:id', (req, res) => {
     //Look up the course
+    const course = couses.find(c => c.id === parseInt(req.params.id));
+    if (!course) res.status(404).send('The course with the given ID does not exist');
+
+//Delete
+    const index = courses.indexOf(course);
+    courses, splice(index, 1);
+
+    //Return the same course
+    res.send(course);
+
 })
 
 // online service postman - to create http request with different methods
